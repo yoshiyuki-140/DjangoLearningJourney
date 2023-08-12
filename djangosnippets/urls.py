@@ -17,6 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from snippets.views import top  # added
+
 urlpatterns = [
+    # my url
+    path("", top, name="top"),
+    # default url
     path('admin/', admin.site.urls),
 ]
