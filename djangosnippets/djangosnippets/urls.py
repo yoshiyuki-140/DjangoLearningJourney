@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from snippets.views import top, snippet_new, snippet_edit, snippet_detail  # added
+from snippets.views import top
 
 urlpatterns = [
     # my url
