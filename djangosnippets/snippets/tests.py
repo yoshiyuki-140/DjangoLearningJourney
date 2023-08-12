@@ -1,13 +1,30 @@
 #coding:utf-8
-from django.test import TestCase
 
 # Create your tests here.
-from django.http import HttpRequest
+# from django.http import HttpRequest
 
 # 波線でるけど、テストコードとして実行するときはmanage.pyがある所から実行されるんで正しいコードだぞ
-from snippets.views import top, snippet_new, snippet_edit, snippet_detail
+from django.test import TestCase
+from snippets.views import snippet_new, snippet_edit, snippet_detail
 from django.urls import resolve
 
+
+class CreateSnippetTest(TestCase):
+    def test_should_resolve_snippet_new(self):
+        found = resolve("/snippets/new/")
+        self.assertEqual(snippet_new, found.func)
+
+
+class SnippetDetailTest(TestCase):
+    def test_should_resolve_snippet_detail(self):
+        found = resolve("/snippets/1/")
+        self.assertEqual(snippet_detail, found.func)
+
+
+class EditSnippetTest(TestCase):
+    def test_should_resolve_snippet_edit(self):
+        found = resolve("/snippets/1/edit/")
+        self.assertEqual(snippet_edit, found.func)
 
 # class TopPageViewTest(TestCase):
 # def test_top_returns_200(self):
@@ -30,19 +47,3 @@ from django.urls import resolve
 # response = self.client.get("/")
 # self.assertEqual(response.content, b"Hello World")
 
-class CreateSnippetTest(TestCase):
-    def test_should_resolve_snippet_new(self):
-        found = resolve("/snippets/new/")
-        self.assertEqual(snippet_new, found.func)
-
-
-class SnippetDetailTest(TestCase):
-    def test_should_resolve_snippet_detail(self):
-        found = resolve("/snippets/1/")
-        self.assertEqual(snippet_detail, found.func)
-
-
-class EditSnippetTest(TestCase):
-    def test_should_resolve_snippet_edit(self):
-        found = resolve("/snippets/1/edit/")
-        self.assertEqual(snippet_edit, found.func)
