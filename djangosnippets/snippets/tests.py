@@ -1,49 +1,38 @@
 #coding:utf-8
 
+from django.contrib.auth import get_user_model
+from django.test import TestCase, Client, RequestFactory
+
 # Create your tests here.
-# from django.http import HttpRequest
+from snippets.models import Snippet
+from snippets.views import top
 
-# 波線でるけど、テストコードとして実行するときはmanage.pyがある所から実行されるんで正しいコードだぞ
-from django.test import TestCase
-from snippets.views import snippet_new, snippet_edit, snippet_detail
-from django.urls import resolve
+UserModel = get_user_model()
 
 
-class CreateSnippetTest(TestCase):
-    def test_should_resolve_snippet_new(self):
-        found = resolve("/snippets/new/")
-        self.assertEqual(snippet_new, found.func)
+class TopPageRenderSnippetsTest(TestCase):
+    def setup(self):
+        self.user = UserModel.objects.create(
+            username="test_user",
+            email="test@example.com",
+            password="top_secret_pass0001",
+        )
 
+        self.snippet = Snippet.objects.create(
+            title="title",
+            code="print('Hello World')",
+            description="description1",
+            created_by=self.user,
+        )
 
-class SnippetDetailTest(TestCase):
-    def test_should_resolve_snippet_detail(self):
-        found = resolve("/snippets/1/")
-        self.assertEqual(snippet_detail, found.func)
+    def test_should_return_snippet_title(self):
+        request = RequestFactory().get("/")
+        request.user = self.user
+        response = top(request)
+        self.assertContains(response, self.snippet.title)
 
-
-class EditSnippetTest(TestCase):
-    def test_should_resolve_snippet_edit(self):
-        found = resolve("/snippets/1/edit/")
-        self.assertEqual(snippet_edit, found.func)
-
-# class TopPageViewTest(TestCase):
-# def test_top_returns_200(self):
-# request = HttpRequest()  # リクエストオブジェクトの作成
-# response = top(request)
-# self.assertEqual(response.status_code, 200)
-#
-# def test_top_returns_expected_content(self):
-# request = HttpRequest()  # httpオブジェクトの作成
-# response = top(request)
-# self.assertEqual(response.content, b"Hello World")
-
-
-# class TopPageTest(TestCase):
-# def test_top_returns_200(self):
-# response = self.client.get("/")
-# self.assertEqual(response.status_code, 200)
-#
-# def test_top_returns_expected_content(self):
-# response = self.client.get("/")
-# self.assertEqual(response.content, b"Hello World")
-
+    def test_should_return_username(self):
+        request = RequestFactory().get("/")
+        request.user = self.user
+        response = top(request)
+        self.assertContains(response, self.user.username)
