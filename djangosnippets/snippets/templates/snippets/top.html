@@ -1,9 +1,32 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Documentスニペット</title>
+  <title>Djangoスニペット</title>
 </head>
 <body>
-  <p>Hello World</p>
+  <h1>ようこそDjangoスニペットへ</h1>
+  <h2>スニペットの一覧</h2>
+  {% if snippets %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>タイトル</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for snippet in snippets %}
+        <tr>
+          <th>{{ snippet.created_by.username }}</th>
+          <th>{{ snippet.created_at }}</th>
+          <th><a href="{% url 'snippet_detail' snippet.id %}"></a></th>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>スニペットはまだ投稿されていません</p>
+  {% endif %}
 </body>
 </html>
