@@ -20,9 +20,7 @@ from django.urls import path, include
 from snippets.views import top
 
 urlpatterns = [
-    # my url
-    path("", top, name="top"),
-    path("snippets/", include("snippets.urls")),    # snippets/urls.pyの読み込み
-    # default url
-    path('admin/', admin.site.urls),
+    path('', top, name="top"),
+    path('snippets/', include("snippets.urls")),    # snippets/urls.pyの読み込み
+    path('admin/', admin.site.urls)
 ]
