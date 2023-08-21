@@ -21,6 +21,7 @@ from snippets.views import top
 
 urlpatterns = [
     path('', top, name="top"),
+    path('admin/', admin.site.urls),
     path('snippets/', include("snippets.urls")),    # snippets/urls.pyの読み込み
-    path('admin/', admin.site.urls)
+    path('accounts/', include("accounts.urls")),    # accounts/urls.pyの読み込み
 ]
