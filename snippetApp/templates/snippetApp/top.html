@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Djangoスニペット</title>
+  </head>
+  <body>
+    {% if snippets %}
+    <table>
+      <thead>
+        <tr>
+          <th>投稿者</th>
+          <th>投稿日</th>
+          <th>タイトル</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for snippet in snippets %}
+        <tr>
+          <td>{{ snippet.created_by.username }}</td>
+          <td>{{ snippet.created_at }}</td>
+          <td><a href="{% url "snippet_detail" snippet.id %}">{{ snippet.title }}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>スニペットはまだ投稿されていません</p>
+    {% endif %}
+  </body>
+</html>
