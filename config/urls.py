@@ -19,6 +19,7 @@ from django.urls import path,include
 from app.views import TopPageView
 
 urlpatterns = [
+    path('accounts/',include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('app/',include('app.urls')),
     path('',TopPageView.as_view(),name='top'),
