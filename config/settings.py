@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-vp#dq0kq)ll08nifz--%6f)q^+lm%=^y5)o4@*vpzihk9q!oj$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,7 +41,10 @@ INSTALLED_APPS = [
     # added apps
     'app',
     'accounts',
+    'django_bootstrap5',
+    'debug_toolbar',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,4 +1,32 @@
-{% load wcwidth %}
+{% extends "base.html" %}
 
+{% block main %}
+<div class="welcome">
+    <h1 class="title">Civic Seek</h1>
+    <p class="subtitle">あなたの悩みを共有しましょう</p>
+    {% comment %} <a class="btn btn-primary" href="{% url '' %}">課題を投稿する</a> {% endcomment %}
+</div>
 
-<p>{{ message | wcswidth }}</p>
+{% if snippets %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>タイトル</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% comment %} {% for snippet in snippets %} {% endcomment %}
+    {% comment %} <tr> {% endcomment %}
+        {% comment %} <th>{{ snippet.created_by.username }}</th> {% endcomment %}
+        {% comment %} <th>{{ snippet.created_at }}</th> {% endcomment %}
+        {% comment %} <th><a href="{% url 'snippet_detail' snippet.id %}">{{ snippet.title }}</a></th> {% endcomment %}
+    {% comment %} </tr> {% endcomment %}
+    {% comment %} {% endfor %} {% endcomment %}
+    </tbody>
+</table>
+{% else %}
+<p>課題はまだ投稿されていません。</p>
+{% endif %}
+{% endblock %}
